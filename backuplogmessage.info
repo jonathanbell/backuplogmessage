@@ -1,0 +1,7 @@
+name = Backup Log Message
+description = Adds mandatory log messages to every quick backup made by the Backup and Migrate module.
+core = 7.x
+version = 7.x-0.1-dev
+package = BC Gov
+dependencies[] = backup_migrate
+# dependencies[] = encryptfapi
