@@ -4,4 +4,3 @@ core = 7.x
 version = 7.x-0.1-dev
 package = BC Gov
 dependencies[] = backup_migrate
-# dependencies[] = encryptfapi
