@@ -10,17 +10,17 @@
 
   $node = new stdClass(); // We create a new node object
   $node->type = 'backup_log_entry';
-  $node->title = date('l, F jS, Y'); //$form_state['values']['log_message']
+  $node->title = date('l, F jS, Y');
   $node->language = LANGUAGE_NONE;
-  node_object_prepare($node); // set default values.
-  $node->uid = 1; // any user id you wish
+  node_object_prepare($node); // Set default values
+  $node->uid = 1; // Can be any user id you wish
 
   $node->body[$node->language][0]['format'] = 'filtered_html';
   $node->body[$node->language][0]['summary'] = 'Changelog entry created: '.date('l, F jS, Y');
   $node->body[$node->language][0]['value'] = $form_state['values']['log_message']['value'];
 
   $node = node_submit($node); // Prepare node for a submit
-  node_save($node); // After this call we'll get a nid
+  node_save($node); // After this call, we will get a nid
 
   drupal_set_message('Created new Backup Log Entry, dated: <strong>'.$node->title.'</strong>');
 
@@ -41,21 +41,9 @@ function backuplogmessage_form_alter(&$form, &$form_state, $form_id) {
       '#required' => TRUE,
     );
 
-    // $form['manually_create_log_message'] = array(
-    //   '#type' => 'submit',
-    //   '#value' => t('Manually Test Stuff'),
-    //   '#suffix' => '<div>'.t('Normally, this action is automated... This is for testing only.').'</div><br><br>',
-    //   '#submit' => array('_dpm_stuff'), // '_backup_migrate_ui_backup_settings_form_submit'
-    // );
-
     // place our function at the start of the list of functions to fire
     // on the submit of the 'quick backup' form (backup and migrate module)
     array_unshift($form['#submit'], '_create_backup_log_message');
 
   } // form_id == backup_migrate_ui_manual_quick_backup_form
-}
-
-// just for testing...
-function _dpm_stuff(&$form, &$form_state) {
-  file_put_contents(getcwd().'/'.drupal_get_path('module', 'backuplogmessage').'/debug.txt', print_r($form_state['values'], true));
 }
